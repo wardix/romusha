@@ -153,3 +153,9 @@ export const FBSTAR_DOWN_SUBSCRIBER_ALERT_URL =
 export const FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS = Number(
   process.env.FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS || 48,
 )
+
+export const DBAIS5_MYSQL_HOST = process.env.DBAIS5_MYSQL_HOST || 'localhost'
+export const DBAIS5_MYSQL_PORT = process.env.DBAIS5_MYSQL_PORT || 3306
+export const DBAIS5_MYSQL_USER = process.env.DBAIS5_MYSQL_USER || 'root'
+export const DBAIS5_MYSQL_PASSWORD = process.env.DBAIS5_MYSQL_PASSWORD || ''
+export const DBAIS5_MYSQL_DB = process.env.DBAIS5_MYSQL_DB || 'test'

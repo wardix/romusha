@@ -7,6 +7,7 @@ import { collectAndPublishPPPoEData } from './jobs/pppoe'
 import { syncZabbixData } from './zabbix.job'
 import { muteOrphanAlert } from './mute-orphan-alert.job'
 import { generateOutdatedIssueMetrics } from './jobs/issue'
+import { syncDataCgsToDba } from './jobs/operator-nusanet'
 import {
   autocloseAssignedTicket,
   autoCloseEskalasiTickets,
@@ -98,6 +99,9 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
       break
     case 'autoCloseMonitoringTickets':
       autoCloseMonitoringTickets()
+      break
+    case 'syncDataCgsToDba':
+      syncDataCgsToDba()
       break
 
     default:
