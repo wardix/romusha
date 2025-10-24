@@ -1,16 +1,11 @@
 import { pool } from '../nis.mysql'
 import { zbxLogin, zbxRpc } from '../zabbix'
+import { batchArray } from '../array'
 import {
   IFORTE_ZABBIX_API_URL,
   IFORTE_ZABBIX_PASSWORD,
   IFORTE_ZABBIX_USERNAME,
 } from '../config'
-
-function chunk<T>(arr: T[], size: number): T[][] {
-  const out: T[][] = []
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size))
-  return out
-}
 
 async function getSubscriberGraphs() {
   const token = await zbxLogin(
@@ -51,7 +46,7 @@ export async function syncZabbixSubscriberGraphs() {
   )
   const skippedGraphIds: string[] = []
   if (graphIds.length > 0) {
-    for (const part of chunk(graphIds, 64)) {
+    for (const part of batchArray(graphIds, 64)) {
       const holder = part.map(() => '?').join(',')
       const sql = [
         'SELECT TRIM(GraphId) AS graphId',

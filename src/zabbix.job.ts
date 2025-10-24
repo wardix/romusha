@@ -1,6 +1,7 @@
 import { pool as db } from './nis.mysql'
 import { createConnection } from 'mysql2/promise'
 import { Client } from 'pg'
+import { batchArray } from './array'
 import {
   ZABBIX_PSQL_DB,
   ZABBIX_PSQL_HOST,
@@ -20,14 +21,6 @@ interface GraphMapEntry {
 
 interface GraphMap {
   [csid: number]: GraphMapEntry
-}
-
-function batchArray<T>(array: T[], batchSize: number): T[][] {
-  const batches: T[][] = []
-  for (let i = 0; i < array.length; i += batchSize) {
-    batches.push(array.slice(i, i + batchSize))
-  }
-  return batches
 }
 
 function isDominantColor(hexColor: string): 'blue' | 'green' | 'unknown' {
