@@ -1,6 +1,20 @@
+import { batchArray } from './array'
+
 type JsonRpcResult<T> = {
   result: T
   error?: { code: number; message: string; data?: string }
+}
+
+type GraphItem = {
+  graphid: string
+  itemid: string
+  sortorder: string
+}
+
+type ItemTrend = {
+  itemid: string
+  clock: string
+  value_avg: string
 }
 
 let zbxId = 1
@@ -58,4 +72,52 @@ export async function zbxLogin(
   } catch (error) {
     return ''
   }
+}
+
+export async function zbxGetGraphItems(
+  url: string,
+  graphIds: number[],
+  auth: string,
+) {
+  const batches = batchArray(graphIds, 64)
+  const returnData: GraphItem[] = []
+  for (const batch of batches) {
+    const graphItems = await zbxRpc<GraphItem[]>(
+      url,
+      'graphitem.get',
+      {
+        output: 'extend',
+        graphids: batch,
+      },
+      auth,
+    )
+    returnData.push(...graphItems)
+  }
+  return returnData
+}
+
+export async function zbxGetTrends(
+  url: string,
+  itemIds: number[],
+  startTimestamp: number,
+  endTimestamp: number,
+  auth: string,
+) {
+  const batches = batchArray(itemIds, 64)
+  const returnData: ItemTrend[] = []
+  for (const batch of batches) {
+    const itemTrends = await zbxRpc<ItemTrend[]>(
+      url,
+      'trend.get',
+      {
+        output: 'extend',
+        itemids: batch,
+        time_from: Math.floor(startTimestamp),
+        time_till: Math.floor(endTimestamp),
+      },
+      auth,
+    )
+    returnData.push(...itemTrends)
+  }
+  return returnData
 }

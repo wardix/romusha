@@ -24,7 +24,10 @@ import {
 } from './jobs/fbstar'
 import { exportOnlinePppoeTicketMetrics } from './jobs/ticket'
 import { exportIncompleteSubscriberDataMetrics } from './jobs/subscriber'
-import { syncZabbixSubscriberGraphs as syncIforteZabbixSubscriberGraphs } from './jobs/iforte'
+import {
+  syncZabbixSubscriberGraphs as syncIforteZabbixSubscriberGraphs,
+  syncZabbixData as syncIforteZabbixData,
+} from './jobs/iforte'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -75,9 +78,11 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
     case 'collectAndPublishPPPoEData':
       collectAndPublishPPPoEData(nc)
       break
+    case 'syncIforteZabbixData':
+      syncIforteZabbixData(subjectParts[3])
+      break
     case 'syncZabbixData':
-      const date = subjectParts[3]
-      syncZabbixData(date)
+      syncZabbixData(subjectParts[3])
       break
     case 'muteOrphanAlert':
       muteOrphanAlert()
