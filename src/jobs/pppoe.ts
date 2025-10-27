@@ -69,6 +69,10 @@ async function sshExec(
 export async function collectAndPublishPPPoEData(natsConn: NatsConnection) {
   const servers = JSON.parse(PPPOE_SERVERS)
   const privateKeyBuffer = Buffer.from(PPPOE_SERVERS_PRIVATE_KEY)
+  const message: NatsMessage = {
+    timestamp: Date.now(),
+    servers: {},
+  }
   for (const { name, host, port, username } of servers) {
     const result = (await sshExec(
       host,
@@ -78,14 +82,9 @@ export async function collectAndPublishPPPoEData(natsConn: NatsConnection) {
       '/ip address print where interface ~"<pppoe-"',
     )) as string
     const interfaces = parseNetworkInterface(result)
-    const message: NatsMessage = {
-      timestamp: Date.now(),
-      servers: {
-        [name]: interfaces,
-      },
-    }
-    const jc = JSONCodec()
-    natsConn.publish(PPPOE_FETHED_EVENT_SUBJECT, jc.encode(message))
+    message.servers[name] = interfaces
     console.log(name)
   }
+  const jc = JSONCodec()
+  natsConn.publish(PPPOE_FETHED_EVENT_SUBJECT, jc.encode(message))
 }
