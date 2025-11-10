@@ -28,6 +28,7 @@ import {
   syncZabbixSubscriberGraphs as syncIforteZabbixSubscriberGraphs,
   syncZabbixData as syncIforteZabbixData,
 } from './jobs/iforte'
+import { syncNusacontactCustomer } from './nusacontact'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -107,6 +108,9 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
       break
     case 'syncDataCgsToDba':
       syncDataCgsToDba()
+      break
+    case 'syncNusacontactCustomer':
+      await syncNusacontactCustomer(String(subjectParts[3]))
       break
 
     default:

@@ -29,6 +29,7 @@ This worker can perform the following jobs:
 *   `autocloseAssignedTicket`: Automatically closes assigned tickets.
 *   `autoCloseSurveyTickets`: Automatically closes survey tickets.
 *   `autocloseHelpdeskTicket`: Automatically closes helpdesk tickets.
+*   `syncNusacontactCustomer`: Synchronizes customer data to NusaContact.
 
 ## Configuration
 
@@ -85,3 +86,6 @@ The worker can be configured using the following environment variables:
 *   `WHATSAPP_QUESTION`: WhatsApp question for feedback
 *   `SYNC_T2T_API_URL`: Sync T2T API URL
 *   `SYNC_T2T_API_KEY`: Sync T2T API key
+*   `NUSACONTACT_SYNC_CONTACT_API_URL`: API endpoint for syncing contacts with NusaContact
+*   `NUSACONTACT_API_KEY`: API key for authenticating requests to NusaContact
+*   `NUSACONTACT_SYNC_CONTACT_MAX_ATTEMPTS`: Maximum number of attempts for syncing contacts to NusaContact

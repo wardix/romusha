@@ -154,6 +154,13 @@ export const FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS = Number(
   process.env.FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS || 48,
 )
 
+// nusacontact sync contact 
+export const nusacontactSyncContactApiUrl =
+  process.env.NUSACONTACT_SYNC_CONTACT_API_URL || ''
+export const nusacontactApiKey = process.env.NUSACONTACT_API_KEY || ''
+export const nusacontactSyncContactMaxAttempts =
+  process.env.NUSACONTACT_SYNC_CONTACT_MAX_ATTEMPTS || '8'
+
 export const DBAIS5_MYSQL_HOST = process.env.DBAIS5_MYSQL_HOST || 'localhost'
 export const DBAIS5_MYSQL_PORT = process.env.DBAIS5_MYSQL_PORT || 3306
 export const DBAIS5_MYSQL_USER = process.env.DBAIS5_MYSQL_USER || 'root'
