@@ -34,6 +34,8 @@ This worker can perform the following jobs:
 *   `genGamasMetrics`: Generates Gamas metrics.
 *   `genOverSpeedBlockedSubscriberMetrics`: Generates over speed blocked subscriber metrics.
 *   `delDeadGraphLink`: Deletes dead graph links from NIS database.
+*   `fetchEngineerTickets`: Fetches engineer tickets and sends WhatsApp notification.
+*   `sendGiftVoucherToBirthdayEmployees`: Sends gift vouchers to birthday employees.
 
 ## Configuration
 
@@ -106,6 +108,13 @@ The worker can be configured using the following environment variables:
 *   `OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_NAME`: Over speed blocked subscriber metrics name (default: `over_speed_blocked_subscriber`)
 *   `OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_FILE_PATH`: Path to the over speed blocked subscriber metrics file (default: `/tmp/metric.txt`)
 *   `OVER_SPEED_BLOCKED_SUBSCRIBER_THRESHOLD`: Over speed blocked subscriber threshold (default: `1000000`)
+*   `VISITCARD_SUMMARY_API_URL`: Visitcard summary API URL
+*   `VISITCARD_TOKEN`: Visitcard API token
+*   `BIRTHDAY_GIFT_VOUCHER_TEMPLATE_PATH`: Path to the birthday gift voucher template (default: `/tmp/asset/birthday-voucher-template.png`)
+*   `BIRTHDAY_GIFT_VOUCHER_PERIOD_DAYS`: Number of days for the birthday gift voucher period (default: `30`)
+*   `BIRTHDAY_WISHES`: Birthday wishes message (default: `Happy birthday`)
+*   `BIRTHDAY_PIC_PHONES`: JSON array of PIC phone numbers for birthday notifications (default: `[]`)
+
 
 
 
