@@ -10,11 +10,6 @@ import {
   DBAIS5_MYSQL_PASSWORD,
   DBAIS5_MYSQL_PORT,
   DBAIS5_MYSQL_USER,
-  ZBX_MYSQL_DB,
-  ZBX_MYSQL_HOST,
-  ZBX_MYSQL_PASSWORD,
-  ZBX_MYSQL_PORT,
-  ZBX_MYSQL_USER,
 } from './config'
 
 export const pool = mysql.createPool({
@@ -34,17 +29,6 @@ export const dbaIs5 = mysql.createPool({
   user: DBAIS5_MYSQL_USER,
   password: DBAIS5_MYSQL_PASSWORD,
   database: DBAIS5_MYSQL_DB,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-})
-
-export const zabbixMysqlPool = mysql.createPool({
-  host: ZBX_MYSQL_HOST,
-  port: Number(ZBX_MYSQL_PORT),
-  user: ZBX_MYSQL_USER,
-  password: ZBX_MYSQL_PASSWORD,
-  database: ZBX_MYSQL_DB,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

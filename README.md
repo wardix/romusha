@@ -32,7 +32,6 @@ This worker can perform the following jobs:
 *   `syncNusacontactCustomer`: Synchronizes customer data to NusaContact.
 *   `genNusacontactQueueMetrics`: Generates NusaContact queue metrics.
 *   `genGamasMetrics`: Generates Gamas metrics.
-*   `genOverSpeedBlockedSubscriberMetrics`: Generates over speed blocked subscriber metrics.
 
 ## Configuration
 
@@ -91,21 +90,17 @@ The worker can be configured using the following environment variables:
 *   `SYNC_T2T_API_KEY`: Sync T2T API key
 *   `NUSACONTACT_SYNC_CONTACT_API_URL`: API endpoint for syncing contacts with NusaContact
 *   `NUSACONTACT_API_KEY`: API key for authenticating requests to NusaContact
-*   `NUSACONTACT_SYNC_CONTACT_MAX_ATTEMPTS`: Maximum number of attempts for syncing contacts to NusaContact (default: `8`)
+*   `NUSACONTACT_SYNC_CONTACT_MAX_ATTEMPTS`: Maximum number of attempts for syncing contacts to NusaContact
 *   `NUSACONTACT_METRICS_URL`: NusaContact metrics URL
-*   `NUSACONTACT_METRICS_NAME`: NusaContact metrics name (default: `nusacontact_queue`)
-*   `NUSACONTACT_QUEUE_METRICS_FILE_PATH`: Path to the NusaContact queue metrics file (default: `/tmp/nusacontact.txt`)
-*   `NUSACONTACT_QUEUE_METRICS_GROUPS`: JSON array of groups to filter enqueued items (default: `["helpdesk","billing"]`)
+*   `NUSACONTACT_METRICS_NAME`: NusaContact metrics name
+*   `NUSACONTACT_QUEUE_METRICS_FILE_PATH`: Path to the NusaContact queue metrics file
+*   `NUSACONTACT_QUEUE_METRICS_GROUPS`: JSON array of groups to filter enqueued items (default: `[]`)
 *   `GAMAS_METRIC_MASS_INCIDENT_PERIOD_SECONDS`: Mass incident period in seconds (default: `60`)
 *   `GAMAS_METRIC_MASS_INCIDENT_COUNT_THRESHOLD`: Mass incident count threshold (default: `8`)
 *   `GAMAS_METRIC_MAX_INCIDENT_AGE_SECONDS`: Maximum incident age in seconds (default: `604800`)
-*   `GAMAS_METRIC_ALERT_API_URL`: Alert API URL (default: `http://alertmanager.nusa.net.id:9093/api/v2/alerts/groups`)
-*   `GAMAS_METRIC_NAME`: Gamas metrics name (default: `gamas`)
-*   `GAMAS_METRIC_FILE_PATH`: Path to the Gamas metrics file (default: `/tmp/gamas.txt`)
-*   `OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_NAME`: Over speed blocked subscriber metrics name (default: `over_speed_blocked_subscriber`)
-*   `OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_FILE_PATH`: Path to the over speed blocked subscriber metrics file (default: `/tmp/metric.txt`)
-*   `OVER_SPEED_BLOCKED_SUBSCRIBER_THRESHOLD`: Over speed blocked subscriber threshold (default: `1000000`)
-
+*   `GAMAS_METRIC_ALERT_API_URL`: Alert API URL
+*   `GAMAS_METRIC_NAME`: Gamas metrics name
+*   `GAMAS_METRIC_FILE_PATH`: Path to the Gamas metrics file
 
 
 

@@ -189,13 +189,3 @@ export const gamasAlertApiUrl =
 export const gamasMetricName = process.env.GAMAS_METRIC_NAME || 'gamas'
 export const gamasMetricFilePath =
   process.env.GAMAS_METRIC_FILE_PATH || '/tmp/gamas.txt'
-
-// overspeed metrics exporter
-export const overSpeedBlockedSubscriberMetricName =
-  process.env.OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_NAME ||
-  'over_speed_blocked_subscriber'
-export const overSpeedBlockedSubscriberMetricFilePath =
-  process.env.OVER_SPEED_BLOCKED_SUBSCRIBER_METRIC_FILE_PATH ||
-  '/tmp/metric.txt'
-export const overSpeedBlockedSubscriberThreshold =
-  process.env.OVER_SPEED_BLOCKED_SUBSCRIBER_THRESHOLD || 1000000
