@@ -33,7 +33,6 @@ This worker can perform the following jobs:
 *   `genNusacontactQueueMetrics`: Generates NusaContact queue metrics.
 *   `genGamasMetrics`: Generates Gamas metrics.
 *   `genOverSpeedBlockedSubscriberMetrics`: Generates over speed blocked subscriber metrics.
-*   `delDeadGraphLink`: Deletes dead graph links from NIS database.
 
 ## Configuration
 
