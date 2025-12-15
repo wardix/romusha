@@ -24,10 +24,11 @@ export async function autocloseAssignedTicket() {
         LEFT JOIN Tts t ON tu.TtsId = t.TtsId
         LEFT JOIN Employee e ON t.EmpId = e.EmpId
         LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+        LEFT JOIN Customer c ON cs.CustId = c.CustId
         WHERE t.TtsTypeId IN (?, ?)
         AND t.Status = 'Call'
         AND t.AssignedNo > 0
-        AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020', '027', '062')
+        AND c.BranchId = '020'
         ORDER BY tu.TtsId, tu.UpdatedTime DESC
         `,
     [REQUEST_TICKET, INCIDENT_TICKET],
@@ -220,9 +221,10 @@ export async function autoCloseEskalasiTickets(): Promise<void> {
     LEFT JOIN Tts t ON tu.TtsId = t.TtsId
     LEFT JOIN Employee e ON t.EmpId = e.EmpId
     LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+    LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE t.TtsTypeId = 10
       AND t.Status = 'Call'
-      AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020', '027', '062')
+      AND c.BranchId = '020'
     ORDER BY tu.TtsId, tu.UpdatedTime DESC
     `,
   )
@@ -303,10 +305,11 @@ export async function autocloseHelpdeskTicket(): Promise<void> {
     LEFT JOIN Employee e ON t.EmpId = e.EmpId
     LEFT JOIN JobTitle jt ON e.JobTitle = jt.Id
     LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+    LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE t.TtsTypeId IN (?, ?)
       AND t.Status = 'Call'
       AND t.AssignedNo = 0
-      AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020')
+      AND c.BranchId = '020'
     ORDER BY tu.TtsId, tu.UpdatedTime DESC
     `,
     [REQUEST_TICKET, INCIDENT_TICKET],
@@ -425,9 +428,10 @@ export async function autoCloseNocTickets(): Promise<void> {
     LEFT JOIN Tts t ON tu.TtsId = t.TtsId
     LEFT JOIN Employee e ON t.EmpId = e.EmpId
     LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+    LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE t.TtsTypeId = 7
       AND t.Status = 'Call'
-      AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020', '027', '062')
+      AND c.BranchId = '020'
     ORDER BY tu.TtsId, tu.UpdatedTime DESC
     `,
   )
@@ -505,9 +509,10 @@ export async function autoCloseSurveyTickets(): Promise<void> {
     LEFT JOIN Tts t ON tu.TtsId = t.TtsId
     LEFT JOIN Employee e ON t.EmpId = e.EmpId
     LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+    LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE t.TtsTypeId = 5
       AND t.Status = 'Call'
-      AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020', '027', '062')
+      AND c.BranchId = '020'
     ORDER BY tu.TtsId, tu.UpdatedTime DESC
     `,
   )
@@ -592,9 +597,10 @@ export async function autoCloseMonitoringTickets(): Promise<void> {
     LEFT JOIN Tts t ON tu.TtsId = t.TtsId
     LEFT JOIN Employee e ON t.EmpId = e.EmpId
     LEFT JOIN CustomerServices cs on cs.CustServId = t.CustServId
+    LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE t.TtsTypeId = 6
       AND t.Status = 'Call'
-      AND IFNULL(e.DisplayBranchId, e.BranchId) IN ('020', '027', '062')
+      AND c.BranchId = '020'
     ORDER BY tu.TtsId, tu.UpdatedTime DESC
     `,
   )
