@@ -29,7 +29,6 @@ import {
   syncZabbixData as syncIforteZabbixData,
 } from './jobs/iforte'
 import { syncNusacontactCustomer } from './nusacontact'
-import { generateNusacontactQueueMetrics } from './nusacontact-exporter'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -113,9 +112,7 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
     case 'syncNusacontactCustomer':
       await syncNusacontactCustomer(String(subjectParts[3]))
       break
-    case 'genNusacontactQueueMetrics':
-      await generateNusacontactQueueMetrics()
-      break
+
     default:
       logger.warn(`Unknown job: ${jobName}`)
   }
