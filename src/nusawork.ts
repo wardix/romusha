@@ -14,7 +14,7 @@ import logger from './logger'
 let cachedToken: null | string = null
 let tokenExpiryTime: null | number = null
 
-export async function getAuthToken(): Promise<null | string> {
+async function getAuthToken(): Promise<null | string> {
   const now = Math.floor(Date.now() / 1000)
   if (
     cachedToken &&
