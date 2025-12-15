@@ -34,7 +34,6 @@ import { generateGamasMetrics } from './gamas-exporter'
 import { generateOverSpeedBlockedSubscriberMetrics } from './overspeed-exporter'
 import { deleteDeadGraphLinks } from './dead-graph'
 import { processEngineerTickets } from './engineer-ticket'
-import { sendGiftVoucherToBirthdayEmployees } from './birthday'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -133,12 +132,6 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
     case 'fetchEngineerTickets':
       await processEngineerTickets(String(subjectParts[3]))
       break
-    case 'sendGiftVoucherToBirthdayEmployees':
-      await sendGiftVoucherToBirthdayEmployees()
-      break
-    // case 'sendNotificationNextWeekBirthdayEmployees':
-    //   await sendNotificationNextWeekBirthdayEmployees()
-    //   break
     default:
       logger.warn(`Unknown job: ${jobName}`)
   }

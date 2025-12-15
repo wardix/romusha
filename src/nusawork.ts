@@ -31,7 +31,7 @@ export async function getAuthToken(): Promise<null | string> {
     })
     cachedToken = response.data.access_token as string
     tokenExpiryTime = now + Number(response.data.expires_in)
-  } catch (error: any) {
+  } catch (error) {
     logger.error('Error fetching auth token: ', error)
   }
   return cachedToken

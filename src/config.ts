@@ -203,16 +203,6 @@ export const overSpeedBlockedSubscriberMetricFilePath =
 export const overSpeedBlockedSubscriberThreshold =
   process.env.OVER_SPEED_BLOCKED_SUBSCRIBER_THRESHOLD || 1000000
 
-// visit card summary
 export const visitCardSummaryApiUrl =
   process.env.VISITCARD_SUMMARY_API_URL || ''
 export const visitCardToken = process.env.VISITCARD_TOKEN || ''
-
-// birthday gift voucher
-export const birthdayGiftVoucherTemplatePath =
-  process.env.BIRTHDAY_GIFT_VOUCHER_TEMPLATE_PATH || '/tmp/template.png'
-export const birthdayGiftVoucherPeriodDays =
-  process.env.BIRTHDAY_GIFT_VOUCHER_PERIOD_DAYS || 30
-export const birthdayWishes = process.env.BIRTHDAY_WISHES || 'Happy birthday'
-export const birthdayPicPhones = process.env.BIRTHDAY_PIC_PHONES || '[]'
-

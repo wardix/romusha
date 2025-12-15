@@ -1,5 +1,4 @@
 import axios from 'axios'
-import * as fs from 'fs/promises'
 import {
   NUSAWA_MESSAGE_API_TOKEN,
   NUSAWA_MESSAGE_API_URL,
@@ -21,28 +20,6 @@ export async function sendWaNotif(to: string, message: string) {
       },
     },
   )
-}
-
-export async function sendWaNotifFile(
-    to: string,
-    filePath: string,
-    message: string
-    ): Promise<void> {
-    const imageBuffer = await fs.readFile(filePath)
-    
-    const payload = {
-        to,
-        body: 'image',
-        image: imageBuffer.toString('base64'),
-        caption: message,
-    }
-
-    await axios.post(NUSAWA_MESSAGE_API_URL, payload, {
-        headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${NUSAWA_MESSAGE_API_TOKEN}`,
-        },
-    })
 }
 
 function sleep(ms: number) {
