@@ -30,7 +30,6 @@ import {
 } from './jobs/iforte'
 import { syncNusacontactCustomer } from './nusacontact'
 import { generateNusacontactQueueMetrics } from './nusacontact-exporter'
-import { generateGamasMetrics } from './gamas-exporter'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -116,9 +115,6 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
       break
     case 'genNusacontactQueueMetrics':
       await generateNusacontactQueueMetrics()
-      break
-    case 'genGamasMetrics':
-      await generateGamasMetrics()
       break
     default:
       logger.warn(`Unknown job: ${jobName}`)
