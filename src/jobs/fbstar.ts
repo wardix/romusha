@@ -73,7 +73,7 @@ async function getRecentDownSubscriberAlerts() {
 async function checkOfflineSubscribersFromAlerts(alerts: AlertLabel[]) {
   const ips = alerts.map((e) => e.ip).filter(Boolean)
   if (ips.length === 0) {
-    logger.log('No recent alerts. Nothing to query.')
+    logger.info('No recent alerts. Nothing to query.')
     return []
   }
 
