@@ -154,7 +154,7 @@ export const FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS = Number(
   process.env.FBSTAR_DOWN_SUBSCRIBER_ALERT_LOOKBACK_HOURS || 48,
 )
 
-// nusacontact sync contact 
+// nusacontact sync contact
 export const nusacontactSyncContactApiUrl =
   process.env.NUSACONTACT_SYNC_CONTACT_API_URL || ''
 export const nusacontactApiKey = process.env.NUSACONTACT_API_KEY || ''
