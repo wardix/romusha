@@ -29,6 +29,7 @@ import {
   syncZabbixData as syncIforteZabbixData,
 } from './jobs/iforte'
 import { syncNusacontactCustomer } from './nusacontact'
+import { distributeBirthdayVouchers } from './jobs/voucher'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -36,6 +37,9 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
   logger.info(`executing job: ${jobName}`)
 
   switch (jobName) {
+    case 'distributeBirthdayVouchers':
+      distributeBirthdayVouchers()
+      break
     case 'updateFbstarOfflineSubscribers':
       updateFbstarOfflineSubscribers()
       break

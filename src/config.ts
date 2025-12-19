@@ -166,3 +166,20 @@ export const DBAIS5_MYSQL_PORT = process.env.DBAIS5_MYSQL_PORT || 3306
 export const DBAIS5_MYSQL_USER = process.env.DBAIS5_MYSQL_USER || 'root'
 export const DBAIS5_MYSQL_PASSWORD = process.env.DBAIS5_MYSQL_PASSWORD || ''
 export const DBAIS5_MYSQL_DB = process.env.DBAIS5_MYSQL_DB || 'test'
+
+export const BIRTHDAY_VOUCHER_TEMPLATE_PATH =
+  process.env.BIRTHDAY_VOUCHER_TEMPLATE_PATH ||
+  './asset/birthday-voucher-template.png'
+export const BIRTHDAY_VOUCHER_PIC_PHONES = JSON.parse(
+  process.env.BIRTHDAY_VOUCHER_PIC_PHONES || '[]',
+)
+export const BIRTHDAY_VOUCHER_PERIOD_DAYS = Number(
+  process.env.BIRTHDAY_VOUCHER_PERIOD_DAYS || 90,
+)
+export const BIRTHDAY_WISHES =
+  process.env.BIRTHDAY_WISHES || 'Selamat ulang tahun, semoga panjang umur'
+
+export const WAENQ_MESSAGE_API_URL =
+  process.env.WAENQ_MESSAGE_API_URL || 'http://localhost:3000/v2/messages'
+export const WAENQ_MESSAGE_API_TOKEN =
+  process.env.WAENQ_MESSAGE_API_TOKEN || 'xxxxxxxxxxxxxxxx'
