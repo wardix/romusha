@@ -21,3 +21,17 @@ export async function sendImage(
     },
   })
 }
+
+export async function sendText(to: string, text: string) {
+  const payload = {
+    to,
+    body: 'text',
+    text,
+  }
+  await axios.post(WAENQ_MESSAGE_API_URL, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${WAENQ_MESSAGE_API_TOKEN}`,
+    },
+  })
+}

@@ -30,6 +30,7 @@ import {
 } from './jobs/iforte'
 import { syncNusacontactCustomer } from './nusacontact'
 import { distributeBirthdayVouchers } from './jobs/voucher'
+import { notifyUpcomingBirthdays } from './jobs/notification'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
   const subjectParts = message.subject.split('.')
@@ -37,6 +38,9 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
   logger.info(`executing job: ${jobName}`)
 
   switch (jobName) {
+    case 'notifyUpcomingBirthdays':
+      notifyUpcomingBirthdays()
+      break
     case 'distributeBirthdayVouchers':
       distributeBirthdayVouchers()
       break
