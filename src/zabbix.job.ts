@@ -44,6 +44,7 @@ function isDominantColor(hexColor: string): 'blue' | 'green' | 'unknown' {
 }
 
 export async function syncZabbixData(date: string = 'yesterday') {
+  const zabbixGraphPrefix = 'n'
   const zbxDb = await createConnection({
     host: ZBX_MYSQL_HOST,
     user: ZBX_MYSQL_USER,
@@ -67,6 +68,7 @@ export async function syncZabbixData(date: string = 'yesterday') {
     LEFT JOIN Customer c ON cs.CustId = c.CustId
     WHERE cs.CustStatus NOT IN ('NA')
     AND c.BranchId = '020' 
+    AND NOT (TRIM(cszg.GraphId) LIKE 's%')
     ORDER BY cs.CustServId, cszg.OrderNo, cszg.Id
   `
 
@@ -88,8 +90,10 @@ export async function syncZabbixData(date: string = 'yesterday') {
   for (const csid in graphMap) {
     const { gid, acc } = graphMap[csid]
     if (gid.startsWith('m') || gid.startsWith('b') || gid.startsWith('j')) {
-      zabbixGids.push(Number(gid.substring(1)))
-      csMap[gid.substring(1)] = { csid, acc }
+      const realGid = gid.substring(1).trim()
+      const safeGraphid = `${zabbixGraphPrefix}${realGid}`
+      zabbixGids.push(Number(realGid))
+      csMap[`${safeGraphid}`] = { csid, acc }
     } else {
       zbxGids.push(Number(gid))
       csMap[gid] = { csid, acc }
@@ -176,18 +180,19 @@ export async function syncZabbixData(date: string = 'yesterday') {
       ...[startTimestamp, startTimestamp + 86400],
     ])
     for (const { graphid, color, volume } of result.rows as any) {
-      if (!(`${graphid}` in trafficRecord)) {
-        trafficRecord[`${graphid}`] = {
+      const safeGraphid = `${zabbixGraphPrefix}${graphid}`
+      if (!(`${safeGraphid}` in trafficRecord)) {
+        trafficRecord[`${safeGraphid}`] = {
           upload: 0,
           download: 0,
-          csid: csMap[`${graphid}`].csid,
-          acc: csMap[`${graphid}`].acc,
+          csid: csMap[`${safeGraphid}`].csid,
+          acc: csMap[`${safeGraphid}`].acc,
         }
       }
       if (isDominantColor(color) === 'green') {
-        trafficRecord[`${graphid}`].download = volume
+        trafficRecord[`${safeGraphid}`].download = volume
       } else if (isDominantColor(color) === 'blue') {
-        trafficRecord[`${graphid}`].upload = volume
+        trafficRecord[`${safeGraphid}`].upload = volume
       }
     }
   }
