@@ -186,3 +186,5 @@ export const WAENQ_MESSAGE_API_TOKEN =
 
 export const EXTRACT_SERIAL_URL = process.env.EXTRACT_SERIAL_URL || ''
 export const EXTRACT_SERIAL_API_KEY = process.env.EXTRACT_SERIAL_API_KEY || ''
+export const EXTRACT_MAC_URL = process.env.EXTRACT_MAC_URL || ''
+export const EXTRACT_MAC_API_KEY = process.env.EXTRACT_MAC_API_KEY || ''

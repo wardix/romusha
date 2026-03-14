@@ -33,6 +33,7 @@ import {
   notifyUpcomingBirthdays,
   notifyCustomerBorrowedItems,
   notifySerialTransactions,
+  notifyMacTransactions,
 } from './jobs/notification'
 
 export async function processJob(message: JsMsg, nc: NatsConnection) {
@@ -125,11 +126,19 @@ export async function processJob(message: JsMsg, nc: NatsConnection) {
     case 'syncNusacontactCustomer':
       await syncNusacontactCustomer(String(subjectParts[3]))
       break
+    case 'notifyMacTransactions':
+      await notifyMacTransactions(
+        subjectParts[3],
+        subjectParts.slice(4).join('.'),
+        JSON.parse(sc.decode(message.data)),
+      )
+      break
     case 'notifySerialTransactions':
-      const serial = subjectParts[3]
-      const jid = subjectParts.slice(4).join('.')
-      const payload = JSON.parse(sc.decode(message.data))
-      await notifySerialTransactions(serial, jid, payload.image)
+      await notifySerialTransactions(
+        subjectParts[3],
+        subjectParts.slice(4).join('.'),
+        JSON.parse(sc.decode(message.data)),
+      )
       break
 
     default:

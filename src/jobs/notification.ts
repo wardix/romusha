@@ -13,6 +13,8 @@ import {
   BIRTHDAY_VOUCHER_PIC_PHONES,
   EXTRACT_SERIAL_URL,
   EXTRACT_SERIAL_API_KEY,
+  EXTRACT_MAC_URL,
+  EXTRACT_MAC_API_KEY,
 } from '../config'
 
 const mmddFormatter = Intl.DateTimeFormat('en-CA', {
@@ -194,10 +196,11 @@ async function sendSerialHistoryNotification(jid: string, serial: string) {
 export async function notifySerialTransactions(
   serial: string,
   jid: string,
-  image: string,
+  data: any,
 ) {
   switch (serial) {
     case 'IMAGE':
+      const { image } = data
       if (image && EXTRACT_SERIAL_URL) {
         try {
           const imageBuffer = Buffer.from(image, 'base64')
@@ -228,6 +231,53 @@ export async function notifySerialTransactions(
       }
       break
     default:
+      await sendSerialHistoryNotification(jid, serial)
+      break
+  }
+}
+
+export async function notifyMacTransactions(
+  mac: string,
+  jid: string,
+  data: any,
+) {
+  switch (mac) {
+    case 'IMAGE':
+      const { image } = data
+      if (image && EXTRACT_MAC_URL) {
+        try {
+          const imageBuffer = Buffer.from(image, 'base64')
+          const imageUint8Array = new Uint8Array(imageBuffer)
+          const imageBlob = new Blob([imageUint8Array], { type: 'image/jpeg' })
+          const formData = new FormData()
+          formData.append('image', imageBlob, 'image.jpg')
+          const response = await axios.post(EXTRACT_MAC_URL, formData, {
+            headers: {
+              'x-api-key': EXTRACT_MAC_API_KEY,
+            },
+          })
+
+          const data = response.data
+          if (data.success && data.found) {
+            const serial = data.mac_address
+              .replaceAll(':', '')
+              .replaceAll('-', '')
+            await sendSerialHistoryNotification(jid, serial)
+          } else {
+            const errorMsg = data.error || 'MAC address not found in image.'
+            await sendWhatsappText(jid, `Extraction Result: ${errorMsg}`)
+          }
+        } catch (error) {
+          console.error('Failed to post IMAGE to extract MAC API', error)
+          await sendWhatsappText(
+            jid,
+            'Error: Failed to process serial extraction.',
+          )
+        }
+      }
+      break
+    default:
+      const serial = mac.replaceAll(':', '').replaceAll('-', '')
       await sendSerialHistoryNotification(jid, serial)
       break
   }
