@@ -44,26 +44,33 @@ const SYNC_CONFIG = {
  */
 
 export async function syncNusacontactCustomer(phone: string): Promise<void> {
-  const contact = await getContactDetail(phone)
-
-  if (!contact) {
+  if (!isValidPhone(phone)) {
     return
   }
 
-  const formattedContact = formatContact(phone, contact)
+  const contact = await getContactDetail(phone)
+
+  // phone is no longer in NIS, clear the stale customer data in Nusacontact
+  const formattedContact = contact
+    ? formatContact(phone, contact)
+    : formatUnknownContact(phone)
   await syncNusacontactContact(formattedContact)
+}
+
+/**
+ * @param {string} phone
+ * @returns {boolean}
+ */
+function isValidPhone(phone: string): boolean {
+  return Boolean(phone) && phone.length >= 10
 }
 
 /**
  * Get customer contact detail from NIS database
  * @param {string} phone
- * @returns {Promise<ContactDetail | null>}
+ * @returns {Promise<ContactDetail | null>} null when phone is not found in NIS
  */
 async function getContactDetail(phone: string): Promise<ContactDetail | null> {
-  if (!phone || phone.length < 10) {
-    return null
-  }
-
   const contact: ContactDetail = {
     name: '',
     salutation: '',
@@ -217,6 +224,22 @@ function formatContact(phoneNumber: string, contact: ContactDetail): any {
     timezone,
     branch_code: branchCode,
     attributes: JSON.stringify(attributes),
+  }
+}
+
+/**
+ * Format contact that is not found in NIS, customer attributes are emptied.
+ * Name is required by Nusacontact but only used for new contacts, an existing name is kept.
+ * @param {string} phoneNumber
+ * @returns {any}
+ */
+function formatUnknownContact(phoneNumber: string): any {
+  return {
+    phone_number: phoneNumber,
+    name: phoneNumber,
+    timezone: 'Asia/Jakarta',
+    branch_code: '',
+    attributes: JSON.stringify({ update: formatUpdatedTimestamp() }),
   }
 }
 
